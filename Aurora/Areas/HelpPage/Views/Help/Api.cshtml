@@ -1,0 +1,17 @@
+@using System.Web.Http
+@using Aurora.Areas.HelpPage.Models
+@model HelpPageApiModel
+
+@{
+    var description = Model.ApiDescription;
+    ViewBag.Title = description.HttpMethod.Method + " " + description.RelativePath;
+}
+
+
+@Html.DisplayFor(m => Model)
+@Html.DisplayForModel("TestClientDialogs")
+
+@section Scripts {
+    <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
+    @Html.DisplayForModel("TestClientReferences")
+}
