@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Clutch</id>
+    <version>1.0.4794.26126</version>
+    <authors>Lukáš Novotný</authors>
+    <owners>Lukáš Novotný</owners>
+    <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>https://github.com/Kukkimonsuta/Clutch</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Common extensions</description>
+    <copyright>Copyright 2012</copyright>
+    <tags>Clutch Mvc</tags>
+  </metadata>
+</package>

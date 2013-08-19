@@ -1,0 +1,360 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EFTracingProvider</name>
+    </assembly>
+    <members>
+        <member name="T:EFTracingProvider.CommandExecutionStatus">
+            <summary>
+            Command Execution Status
+            </summary>
+        </member>
+        <member name="F:EFTracingProvider.CommandExecutionStatus.Executing">
+            <summary>
+            The command is executing.
+            </summary>
+        </member>
+        <member name="F:EFTracingProvider.CommandExecutionStatus.Finished">
+            <summary>
+            The command has finished.
+            </summary>
+        </member>
+        <member name="F:EFTracingProvider.CommandExecutionStatus.Failed">
+            <summary>
+            The command has failed.
+            </summary>
+        </member>
+        <member name="T:EFTracingProvider.EFTracingProviderUtils">
+            <summary>
+            Utility methods for the Entity Framework Tracing Provider.
+            </summary>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingProviderUtils.CreateTracedEntityConnection(System.String)">
+            <summary>
+            Creates a traced entity connection wrapping the original entity connection string.
+            </summary>
+            <param name="entityConnectionString">The original entity connection string. This may also be a single word, e.g., "MyEntities", in which case it is translated into "name=MyEntities" and looked up in the application configuration.</param>
+            <returns>An entity connection.</returns>
+        </member>
+        <member name="T:EFTracingProvider.EFTracingCommand">
+            <summary>
+            Implementation of <see cref="T:System.Data.Common.DbCommand"/> which traces all commands executed.
+            </summary>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingCommand.#ctor(System.Data.Common.DbCommand,EFProviderWrapperToolkit.DbCommandDefinitionWrapper)">
+            <summary>
+            Initializes a new instance of the EFTracingCommand class.
+            </summary>
+            <param name="wrappedCommand">The wrapped command.</param>
+            <param name="commandDefinition">The command definition.</param>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingCommand.ExecuteScalar">
+            <summary>
+            Executes the query and returns the first column of the first row in the result set returned by the query. All other columns and rows are ignored.
+            </summary>
+            <returns>
+            The first column of the first row in the result set.
+            </returns>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingCommand.ExecuteNonQuery">
+            <summary>
+            Executes a SQL statement against a connection object.
+            </summary>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingCommand.ExecuteDbDataReader(System.Data.CommandBehavior)">
+            <summary>
+            Executes the command text against the connection.
+            </summary>
+            <param name="behavior">An instance of <see cref="T:System.Data.CommandBehavior"/>.</param>
+            <returns>
+            A <see cref="T:System.Data.Common.DbDataReader"/>.
+            </returns>
+        </member>
+        <member name="P:EFTracingProvider.EFTracingCommand.CommandID">
+            <summary>
+            Gets the unique command ID.
+            </summary>
+            <value>The command ID.</value>
+        </member>
+        <member name="P:EFTracingProvider.EFTracingCommand.Connection">
+            <summary>
+            Gets the <see cref="T:EFTracingProvider.EFTracingConnection"/> used by this <see cref="T:System.Data.Common.DbCommand"/>.
+            </summary>
+            <value></value>
+            <returns>
+            The connection to the data source.
+            </returns>
+        </member>
+        <member name="T:EFTracingProvider.EFTracingConnection">
+            <summary>
+            Wrapper <see cref="T:System.Data.Common.DbConnection"/> which traces all executed commands.
+            </summary>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingConnection.#ctor">
+            <summary>
+            Initializes a new instance of the EFTracingConnection class.
+            </summary>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingConnection.#ctor(System.Data.Common.DbConnection)">
+            <summary>
+            Initializes a new instance of the EFTracingConnection class.
+            </summary>
+            <param name="wrappedConnection">The wrapped connection.</param>
+        </member>
+        <member name="E:EFTracingProvider.EFTracingConnection.CommandExecuting">
+            <summary>
+            Occurs when database command is executing.
+            </summary>
+        </member>
+        <member name="E:EFTracingProvider.EFTracingConnection.CommandFinished">
+            <summary>
+            Occurs when database command has finished execution.
+            </summary>
+        </member>
+        <member name="E:EFTracingProvider.EFTracingConnection.CommandFailed">
+            <summary>
+            Occurs when database command execution has failed.
+            </summary>
+        </member>
+        <member name="P:EFTracingProvider.EFTracingConnection.DbProviderFactory">
+            <summary>
+            Gets the <see cref="T:System.Data.Common.DbProviderFactory"/> for this <see cref="T:System.Data.Common.DbConnection"/>.
+            </summary>
+            <value></value>
+            <returns>
+            A <see cref="T:System.Data.Common.DbProviderFactory"/>.
+            </returns>
+        </member>
+        <member name="P:EFTracingProvider.EFTracingConnection.DefaultWrappedProviderName">
+            <summary>
+            Gets the name of the default wrapped provider.
+            </summary>
+            <returns>Name of the default wrapped provider.</returns>
+        </member>
+        <member name="T:EFTracingProvider.CommandExecutionEventArgs">
+            <summary>
+            Arguments to <see cref="E:EFTracingProvider.EFTracingConnection.CommandExecuting"/>, <see cref="E:EFTracingProvider.EFTracingConnection.CommandFinished"/> 
+            and <see cref="E:EFTracingProvider.EFTracingConnection.CommandFailed"/> events.
+            </summary>
+        </member>
+        <member name="M:EFTracingProvider.CommandExecutionEventArgs.#ctor(EFTracingProvider.EFTracingCommand,System.String)">
+            <summary>
+            Initializes a new instance of the CommandExecutionEventArgs class.
+            </summary>
+            <param name="command">The command.</param>
+            <param name="method">The method.</param>
+        </member>
+        <member name="M:EFTracingProvider.CommandExecutionEventArgs.ToTraceString">
+            <summary>
+            Returns textual dump of the command suitable for putting in a log file.
+            </summary>
+            <returns>Textual dump of the command including command text and parameters, 
+            suitable for putting in a log file.</returns>
+        </member>
+        <member name="M:EFTracingProvider.CommandExecutionEventArgs.ToFlattenedTraceString">
+            <summary>
+            Condenses a <see cref="T:EFTracingProvider.CommandExecutionEventArgs"/> notification into a single line of text.
+            </summary>
+            <returns>The notification, as a single line of text.</returns>
+        </member>
+        <member name="P:EFTracingProvider.CommandExecutionEventArgs.CommandId">
+            <summary>
+            Gets the command ID.
+            </summary>
+            <value>The command ID.</value>
+        </member>
+        <member name="P:EFTracingProvider.CommandExecutionEventArgs.Command">
+            <summary>
+            Gets the command object.
+            </summary>
+            <value>The command.</value>
+        </member>
+        <member name="P:EFTracingProvider.CommandExecutionEventArgs.CommandTree">
+            <summary>
+            Gets the command tree.
+            </summary>
+            <value>The command tree.</value>
+        </member>
+        <member name="P:EFTracingProvider.CommandExecutionEventArgs.Method">
+            <summary>
+            Gets the method which caused command execution (ExecuteScalar, ExecuteQuery, ExecuteNonQuery).
+            </summary>
+            <value>The method name.</value>
+        </member>
+        <member name="P:EFTracingProvider.CommandExecutionEventArgs.Status">
+            <summary>
+            Gets the execution status.
+            </summary>
+            <value>Execution status.</value>
+        </member>
+        <member name="P:EFTracingProvider.CommandExecutionEventArgs.Result">
+            <summary>
+            Gets the command result.
+            </summary>
+            <value>The command result.</value>
+        </member>
+        <member name="P:EFTracingProvider.CommandExecutionEventArgs.Duration">
+            <summary>
+            Gets the time it took to execute the command.
+            </summary>
+            <value>The duration.</value>
+        </member>
+        <member name="T:EFTracingProvider.EFTracingProviderConfiguration">
+            <summary>
+            Configuration of EFTracingProvider.
+            </summary>
+            <remarks>
+            Default values for properties of this class are obtained by reading configuration file:
+            <para>'EFTracingProvider.logToConsole' parameter supplies default value for <see cref="P:EFTracingProvider.EFTracingProviderConfiguration.LogToConsole"/>.</para>
+            <para>'EFTracingProvider.logToFile' parameter supplies default value for <see cref="P:EFTracingProvider.EFTracingProviderConfiguration.LogToConsole"/>.</para>
+            </remarks>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingProviderConfiguration.#cctor">
+            <summary>
+            Initializes static members of the EFTracingProviderConfiguration class.
+            </summary>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingProviderConfiguration.RegisterProvider">
+            <summary>
+            Registers the provider factory 
+            </summary>
+        </member>
+        <member name="P:EFTracingProvider.EFTracingProviderConfiguration.DefaultWrappedProvider">
+            <summary>
+            Gets or sets the default wrapped provider.
+            </summary>
+            <value>The default wrapped provider.</value>
+        </member>
+        <member name="P:EFTracingProvider.EFTracingProviderConfiguration.LogToConsole">
+            <summary>
+            Gets or sets a value indicating whether to log to console for all new connections.
+            </summary>
+            <value>A value of <c>true</c> if new connections should log all statements to the console; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:EFTracingProvider.EFTracingProviderConfiguration.LogToFile">
+            <summary>
+            Gets or sets the name of the log file for newly created connections.
+            </summary>
+            <value>The log to file.</value>
+        </member>
+        <member name="P:EFTracingProvider.EFTracingProviderConfiguration.LogAction">
+            <summary>
+            Gets or sets the action to be executed before and after every command.
+            </summary>
+            <value>The log action.</value>
+        </member>
+        <member name="T:EFTracingProvider.EFTracingExtensionMethods">
+            <summary>
+            Extension methods for EFTracingProvider.
+            </summary>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingExtensionMethods.GetTracingConnections(System.Data.Common.DbConnection)">
+            <summary>
+            Gets all instances of <see cref="T:EFTracingProvider.EFTracingConnection"/> from <see cref="T:System.Data.Common.DbConnection"/>.
+            </summary>
+            <param name="connection">The connection object.</param>
+            <returns>Instances of <see cref="T:EFTracingProvider.EFTracingConnection"/>.</returns>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingExtensionMethods.SetTraceSource(System.Data.Common.DbConnection,System.Diagnostics.TraceSource)">
+            <summary>
+            Sets the trace source for all instances of <see cref="T:EFTracingProvider.EFTracingConnection"/>.
+            </summary>
+            <param name="connection">The connection.</param>
+            <param name="traceSource">The trace source to which to trace SQL command activity.</param>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingExtensionMethods.EnableTracing(System.Data.Objects.ObjectContext,System.String)">
+            <summary>
+            Enables SQL command tracing for all instances of <see cref="T:EFTracingProvider.EFTracingConnection"/> in the object context.
+            </summary>
+            <param name="context">The object context.</param>
+            <param name="traceSourceName">The name of the trace source; if not specified, it defaults to "EntityFramework." + <see cref="P:System.Data.Objects.ObjectContext.DefaultContainerName"/>.</param>
+        </member>
+        <member name="T:EFTracingProvider.EFTracingProviderFactory">
+            <summary>
+            EFTracingProvider factory.
+            </summary>
+        </member>
+        <member name="F:EFTracingProvider.EFTracingProviderFactory.InvariantName">
+            <summary>
+            The invariant name for this provider factory.
+            </summary>
+        </member>
+        <member name="F:EFTracingProvider.EFTracingProviderFactory.registered">
+            <summary>
+            Whether or not the provider factory has been registered.
+            </summary>
+        </member>
+        <member name="F:EFTracingProvider.EFTracingProviderFactory.Instance">
+            <summary>
+            Gets or sets the singleton instance of the provider.
+            </summary>
+            <value>The instance.</value>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingProviderFactory.#ctor(System.Data.Common.DbProviderServices)">
+            <summary>
+            Initializes a new instance of the EFTracingProviderFactory class.
+            </summary>
+            <param name="providerServices">The provider services.</param>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingProviderFactory.CreateConnection">
+            <summary>
+            Returns a new instance of the provider's class that implements the <see cref="T:System.Data.Common.DbConnection"/> class.
+            </summary>
+            <returns>
+            A new instance of <see cref="T:System.Data.Common.DbConnection"/>.
+            </returns>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingProviderFactory.Register">
+            <summary>
+            Registers the tracing provider factory, if it has not already been registered.
+            </summary>
+        </member>
+        <member name="T:EFTracingProvider.EFTracingProviderServices">
+            <summary>
+            Implementation of <see cref="T:System.Data.Common.DbProviderServices"/> for EFTracingProvider.
+            </summary>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingProviderServices.#cctor">
+            <summary>
+            Initializes static members of the EFTracingProviderServices class.
+            </summary>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingProviderServices.#ctor">
+            <summary>
+            Initializes a new instance of the EFTracingProviderServices class.
+            </summary>
+        </member>
+        <member name="M:EFTracingProvider.EFTracingProviderServices.CreateCommandDefinitionWrapper(System.Data.Common.DbCommandDefinition,System.Data.Common.CommandTrees.DbCommandTree)">
+            <summary>
+            Creates the command definition wrapper.
+            </summary>
+            <param name="wrappedCommandDefinition">The wrapped command definition.</param>
+            <param name="commandTree">The command tree.</param>
+            <returns>
+            The <see cref="T:EFProviderWrapperToolkit.DbCommandDefinitionWrapper"/> object.
+            </returns>
+        </member>
+        <member name="P:EFTracingProvider.EFTracingProviderServices.Instance">
+            <summary>
+            Gets the singleton instance.
+            </summary>
+            <value>The singleton instance.</value>
+        </member>
+        <member name="P:EFTracingProvider.EFTracingProviderServices.DefaultWrappedProviderName">
+            <summary>
+            Gets the default name of the wrapped provider.
+            </summary>
+            <returns>
+            Default name of the wrapped provider (to be used when
+            provider is not specified in the connction string).
+            </returns>
+        </member>
+        <member name="P:EFTracingProvider.EFTracingProviderServices.ProviderInvariantName">
+            <summary>
+            Gets the provider invariant iname.
+            </summary>
+            <returns>Provider invariant name.</returns>
+        </member>
+    </members>
+</doc>

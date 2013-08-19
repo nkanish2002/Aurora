@@ -66,11 +66,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AuroraData\AuroraData.csproj">
+    <ProjectReference Include="..\AuroraData\Models.csproj">
       <Project>{9a766317-76c0-48fa-8d36-66fd55cb97b6}</Project>
       <Name>AuroraData</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AuroraEntity\AuroraEntity.csproj">
+    <ProjectReference Include="..\AuroraEntity\Entity.csproj">
       <Project>{658a939f-f682-4e23-85f9-f28d70fe2e06}</Project>
       <Name>AuroraEntity</Name>
     </ProjectReference>

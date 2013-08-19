@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>CommunityEFProviderWrappers.EFTracingProvider</id>
+    <version>1.0.0</version>
+    <title>Entity Framework Tracing Provider</title>
+    <authors>Jaroslaw Kowalski, Stephen Cleary</authors>
+    <owners>Jaroslaw Kowalski, Stephen Cleary</owners>
+    <licenseUrl>http://efwrappers.codeplex.com/license</licenseUrl>
+    <projectUrl>http://efwrappers.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A provider that allows tracing Entity Framework queries and updates.</description>
+    <summary>A provider that allows tracing Entity Framework queries and updates.</summary>
+    <tags>entity-framework ef entities linq trace tracing database provider</tags>
+    <dependencies>
+      <dependency id="CommunityEFProviderWrappers.EFProviderWrapperToolkit" />
+    </dependencies>
+  </metadata>
+</package>
